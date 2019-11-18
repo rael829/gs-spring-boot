@@ -6,5 +6,7 @@ stages:
       shellScript: |-
         pwd
         ls
+        cd complete
+        mvn clean package
 timeout: 60
 notification: {}
