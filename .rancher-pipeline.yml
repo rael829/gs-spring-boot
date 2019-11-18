@@ -4,9 +4,28 @@ stages:
   - runScriptConfig:
       image: maven:3-jdk-8
       shellScript: |-
+        mkdir -p /root/.m2 && mv settings.xml /root/.m2/
         pwd
         ls
         cd complete
         mvn clean package
+    env:
+      NEXUS_HOST: http://172.16.1.80:31231/
+    envFrom:
+    - sourceName: nexus-key
+      sourceKey: admin
+      targetKey: NEXUS_TOKEN
+- name: Publish
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: example-gs-spring-boot:${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: 172.16.1.80:30928
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
 timeout: 60
 notification: {}
