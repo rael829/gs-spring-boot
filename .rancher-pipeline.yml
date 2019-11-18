@@ -9,6 +9,7 @@ stages:
         ls
         mkdir -p /root/.m2 && mv settings.xml /root/.m2/
         mvn clean package
+        ls
     env:
       NEXUS_HOST: http://172.16.1.80:31231/
     envFrom:
