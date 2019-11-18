@@ -4,8 +4,6 @@ stages:
   - runScriptConfig:
       image: maven:3-jdk-8
       shellScript: |-
-        pwd
-        ls
         cd complete
         pwd
         ls
@@ -20,7 +18,7 @@ stages:
 - name: Publish
   steps:
   - publishImageConfig:
-      dockerfilePath: ./Dockerfile
+      dockerfilePath: ./complete/Dockerfile
       buildContext: .
       tag: example-gs-spring-boot:${CICD_EXECUTION_SEQUENCE}
       pushRemote: true
@@ -30,6 +28,6 @@ stages:
 - name: Deploy
   steps:
   - applyYamlConfig:
-      path: ./deployment.yaml
+      path: ./complete/deployment.yaml
 timeout: 60
 notification: {}
