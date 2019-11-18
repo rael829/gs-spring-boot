@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gs-spring-boot-service
+spec:
+  selector:
+    app: gs-spring-boot
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-gs-spring-boot
+  labels:
+    app: gs-spring-boot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gs-spring-boot
+  template:
+    metadata:
+      labels:
+        app: gs-spring-boot
+    spec:
+      imagePullSecrets:
+      - name: nexus-docker
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8080
