@@ -7,6 +7,8 @@ stages:
         pwd
         ls
         cd complete
+        pwd
+        ls
         mkdir -p /root/.m2 && mv settings.xml /root/.m2/
         mvn clean package
     env:
