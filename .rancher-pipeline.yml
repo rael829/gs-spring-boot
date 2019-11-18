@@ -4,10 +4,10 @@ stages:
   - runScriptConfig:
       image: maven:3-jdk-8
       shellScript: |-
-        mkdir -p /root/.m2 && mv settings.xml /root/.m2/
         pwd
         ls
         cd complete
+        mkdir -p /root/.m2 && mv settings.xml /root/.m2/
         mvn clean package
     env:
       NEXUS_HOST: http://172.16.1.80:31231/
